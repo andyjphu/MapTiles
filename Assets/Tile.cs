@@ -1,5 +1,8 @@
-using Unity.VisualScripting;
+
+using cakeslice;
 using UnityEngine;
+using System;
+
 
 public class Tile
 {
@@ -13,8 +16,10 @@ public class Tile
     public float tileFertility = 0;
     public float maxFertility = 100;
 
-    public void UpdateFertility (float newFertility) {
-        tileFertility = newFertility; 
+
+    public void UpdateFertility(float newFertility)
+    {
+        tileFertility = newFertility;
         tileColor = tileColor;
 
     }
@@ -37,19 +42,27 @@ public class Tile
 
         Vector3[] vertices = new Vector3[]
         {
-            new Vector3(centerX - width, height, centerZ - width),
-            new Vector3(centerX + width, height, centerZ - width),
-            new Vector3(centerX + width, height, centerZ + width),
-            new Vector3(centerX - width, height, centerZ + width)
+            new Vector3( - width, 0,  - width),
+            new Vector3( + width, 0,  - width),
+            new Vector3( + width, 0,  + width),
+            new Vector3( - width, 0,  + width)
         };
 
         attachedGameObject.GetComponent<MeshFilter>().mesh.vertices = vertices;
         int[] triangles = new int[] { 0, 2, 1, 0, 3, 2 };
         attachedGameObject.GetComponent<MeshFilter>().mesh.triangles = triangles;
+        attachedGameObject.AddComponent<MeshCollider>();
+
 
         tileColor = initialColor;
         attachedGameObject.GetComponent<MeshRenderer>().material.color = tileColor;
         attachedGameObject.GetComponent<MeshRenderer>().material.SetFloat("_Glossiness", 0);
+
+        attachedGameObject.AddComponent<Outline>();
+        attachedGameObject.GetComponent<Outline>().enabled = false;
+        attachedGameObject.tag = "Tile";
+        attachedGameObject.AddComponent<TileMethods>(); 
+        attachedGameObject.transform.position = new Vector3(centerX, height, centerZ);
     }
 
     public Color tileColor
@@ -66,4 +79,8 @@ public class Tile
             attachedGameObject.GetComponent<MeshRenderer>().material.color = value;
         }
     }
+
+
+
+
 }
