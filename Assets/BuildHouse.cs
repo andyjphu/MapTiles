@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class BuildHouse : MonoBehaviour
 {
+
+    public BuildVariables bv; 
     // Start is called before the first frame update
     void Start()
     {
-
+        bv = GameObject.Find("Global").GetComponent<BuildVariables>(); 
     }
 
     // Update is called once per frameÏ
@@ -21,16 +23,19 @@ public class BuildHouse : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                
                 GameObject selectedObject = hit.collider.gameObject;
                 if (selectedObject == null) { return; }
                 //Debug.Log("Selected Object: " + selectedObject.name);
-                selectedObject.GetComponent<Outline>().enabled = !selectedObject.GetComponent<Outline>().enabled;
+                bv.clearSelection();
+                selectedObject.GetComponent<Outline>().enabled = true; 
+                bv.selectedObjects.Add(selectedObject);
+                
+                
 
-                Debug.Log($"{selectedObject.GetComponent<Outline>()}");
-
-                if (selectedObject.tag == "Tile" && GameObject.Find("Global").GetComponent<BuildVariables>().buildHouseEnabled)
+                if (selectedObject.tag == "Tile" && bv.buildHouseEnabled)
                 {
-                    selectedObject.GetComponent<TileMethods>().updateHouse(true, GameObject.Find("Global").GetComponent<BuildVariables>().housePrefab);
+                    selectedObject.GetComponent<TileMethods>().updateHouse(true, bv.housePrefab);
                 }
             }
         }
