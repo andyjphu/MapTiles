@@ -10,8 +10,8 @@ public class Tile
     private float width = 0.5f;
     private float height = 0;
 
-    private Color baseColor = Color.white;  // Base color for the tile
-    private Color fertileColor = Color.green; // Color when fertility is maximum
+    public Color baseColor = Color.white;  // Base color for the tile
+    public Color fertileColor = Color.green; // Color when fertility is maximum
 
     public float tileFertility = 0;
     public float maxFertility = 100;
