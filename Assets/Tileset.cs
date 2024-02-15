@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tileset
 {
     public List<Tile> Tiles = new List<Tile>();
-    public Tileset((float, float)[] coordinates)
+    public Tileset((float, float)[] coordinates, Material tileMaterial)
     {
         HashSet<(float, float)> coordinateSet = new HashSet<(float, float)>();
 
@@ -14,7 +14,7 @@ public class Tileset
             if (!coordinateSet.Contains((x, z)))
             {
                 coordinateSet.Add((x, z));
-                Tile tile = new Tile(x, z);
+                Tile tile = new Tile(x, z, tileMaterial);
                 Tiles.Add(tile);
             }
             else {
